@@ -8,7 +8,11 @@ var defaultCorsHeaders = {
 };
 
 let message = {
-  results: []
+  results: [{
+    text: 'Hello',
+    username: 'World',
+    roomname: 'lobby'
+  }]
 };
   
 var requestHandler = function(request, response) {
@@ -17,25 +21,29 @@ var requestHandler = function(request, response) {
   
   if (request.method === 'GET' && request.url === '/classes/messages') {
     if (request.url === '/favicon.ico') {
-      response.writeHead(404, {'Content-Type': 'json'});
+      response.writeHead(404, headers);
       response.end();
     } else {
-      response.writeHead(200, {'Content-Type': 'json'});
+      response.writeHead(200, headers);
       response.end(JSON.stringify(message));
     }
-  } else if (request.method === 'POST' && request.url === '/classes/messages') {
+  } else if (request.method === 'POST') { //&& request.url === '/classes/messages') {
     let body = [];
     request.on('data', (chunk) => {
       body.push(chunk);
     }).on('end', () => {     
       body = Buffer.concat(body).toString();
       message.results.push(JSON.parse(body));
-      response.writeHead(201, {'Content-Type': 'json'});
+      response.writeHead(201, headers);
       response.end();
     });
     
+  } else if ( !headers['access-control-allow-methods'].includes(request.method) ) {
+    response.writeHead(405, headers);
+    response.end();
   } else {
-    response.statusCode = 404;
+
+    response.writeHead(404, headers);
     response.end();
   }
 };

@@ -42,12 +42,14 @@ describe('server', function() {
     };
 
     request(requestParams, function(error, response, body) {
+      //console.log('response.code from working test----->', response.statusCode)
       expect(response.statusCode).to.equal(201);
       done();
     });
   });
 
   it('should respond with messages that were previously posted', function(done) {
+
     var requestParams = {method: 'POST',
       uri: 'http://127.0.0.1:3000/classes/messages',
       json: {
@@ -72,6 +74,17 @@ describe('server', function() {
       done();
     });
   });
-
-
+  it('should not accept VOID requests to /classes/messages', function(done) {
+    var requestParams = { method: 'VOID',
+      uri: 'http://127.0.0.1:3000/classes/messages',
+      json: {
+        username: 'Jono',
+        text: 'Do my bidding!'}
+    };
+    request(requestParams, function(error, response, body) {
+      console.log('response code from last test------->', response.statusCode);
+      expect(response.statusCode).to.equal(404);
+      done();
+    });
+  });
 });

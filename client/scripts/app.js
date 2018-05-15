@@ -18,7 +18,7 @@ app.init = () => {
   $(document).on('click', '.username',function(e) {
     e.preventDefault();
     var $className = $(this).text();
-    $('.'+$className).toggleClass('friend')
+    $('.'+$className).toggleClass('friend');
 
   });
   
@@ -30,9 +30,9 @@ app.init = () => {
     e.preventDefault();
     
     var message = {
-    username: 'default',
-    text: undefined,
-    roomname: 'lobby'
+      username: 'default',
+      text: undefined,
+      roomname: 'lobby'
     };
     
     message.username = app.getUsername();
@@ -42,7 +42,7 @@ app.init = () => {
     app.fetch(app.renderMessage);
     app.fetch(app.renderRoom);
     
-  })
+  });
   
   $('button').on('click', function(e) {
     e.preventDefault();
@@ -60,10 +60,10 @@ app.init = () => {
 
 app.send = (message) => {
   $.ajax({
-    url: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
+    url: 'http://127.0.0.1:3000/classes/messages',
     type: 'POST',
     data: JSON.stringify(message),
-    contentType: 'application/json',
+    //contentType: 'application/json',
     success: (data) => {
       console.log('chatterbox: Message sent');
     },
@@ -76,14 +76,14 @@ app.send = (message) => {
 
 app.fetch = (callback, arg) => {
   $.ajax({
-    url: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
+    url: 'http://127.0.0.1:3000/classes/messages',
     type: 'GET',
     dataType: 'json',
-    data: 'order=-createdAt',
+    //data: 'order=-createdAt',
     success: (data) => {
       
       console.log('chatterbox: Message received');
-      app.clearMessages()
+      app.clearMessages();
       callback(data.results, arg);
 
     },

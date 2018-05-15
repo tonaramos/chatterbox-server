@@ -120,5 +120,29 @@ describe('Node Server Request Listener Function', function() {
         expect(res._responseCode).to.equal(404);
       });
   });
+  it('Should 405 for a non-accepeted method', function() {
+    var req = new stubs.request('/arglebargle', 'Alert-TerribleCall');
+    var res = new stubs.response();
+
+    handler.requestHandler(req, res);
+
+    waitForThen(
+      function() { return res._ended; },
+      function() {
+        expect(res._responseCode).to.equal(405);
+      });
+  });
+  it('Should 400 when given wrong request syntax', function() {
+    var req = new stubs.request( "< script +%* />" , 'AnotherTerribleCall');
+    var res = new stubs.response();
+
+    handler.requestHandler(req, res);
+
+    waitForThen(
+      function() { return res._ended; },
+      function() {
+        expect(res._responseCode).to.equal(400);
+      });
+  });  
 
 });
