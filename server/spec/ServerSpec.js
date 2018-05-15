@@ -62,10 +62,11 @@ describe('Node Server Request Listener Function', function() {
       text: 'Do my bidding!'
     };
     var req = new stubs.request('/classes/messages', 'POST', stubMsg);
-    console.log('thisis this test log', req);
     var res = new stubs.response();
-
+    console.log('req------------', req);
     handler.requestHandler(req, res);
+    
+    //console.log('res ended--------------', res._ended);
 
     // Expect 201 Created response status
     expect(res._responseCode).to.equal(201);
@@ -73,6 +74,7 @@ describe('Node Server Request Listener Function', function() {
     // Testing for a newline isn't a valid test
     // TODO: Replace with with a valid test
     // expect(res._data).to.equal(JSON.stringify('\n'));
+    
     expect(res._ended).to.equal(true);
   });
 
