@@ -74,7 +74,7 @@ describe('server', function() {
       done();
     });
   });
-  it('should not accept VOID requests to /classes/messages', function(done) {
+  xit('should not accept VOID requests to /classes/messages', function(done) {
     var requestParams = { method: 'VOID',
       uri: 'http://127.0.0.1:3000/classes/messages',
       json: {

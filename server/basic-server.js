@@ -1,6 +1,9 @@
 /* Import node's http module: */
 var http = require('http');
 var handleRequest = require('./request-handler.js');
+var fs = require('fs');
+var url = require('url');
+var path = require('path');
 //var stubs = require('./Stubs');
 
 // Every server needs to listen on a port with a unique number. The

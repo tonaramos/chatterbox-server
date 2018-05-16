@@ -1,4 +1,7 @@
 var stubs = require('./spec/Stubs');
+var fs = require('fs');
+var url = require('url');
+var path = require('path');
 
 var defaultCorsHeaders = {
   'access-control-allow-origin': '*',
@@ -18,6 +21,27 @@ let message = {
 var requestHandler = function(request, response) {
   var statusCode = 200;
   var headers = defaultCorsHeaders;
+  
+  // attempted advanced
+  
+  // var parsedUrl = url.parse(request.url);
+  // var pathname = `.${parsedUrl.pathname}`;
+  
+  // fs.exists(pathname, function(exist){
+  //   if (!exist) {
+  //     response.writeHead(404, headers);
+  //     response.end('not found');
+  //     return;
+  //   }
+  //   if (fs.statSync(pathname).isDirectory()) {
+  //     pathname += '/index.html';
+  //   }
+  //   fs.readFile(pathname, function(err, data) {
+  //     response.setHeader('content-type', 'text/html');
+  //     response.end(data);
+  //   })
+  // })
+  
   
   if (request.method === 'GET' && request.url === '/classes/messages') {
     if (request.url === '/favicon.ico') {
